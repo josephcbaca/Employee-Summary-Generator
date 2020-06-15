@@ -11,7 +11,6 @@ Organization is key in any company.  Let's make it easy with our handy Employee 
 * [Usage](#usage)
 * [Credits](#Credits)
 * [Tests](#Tests)
-* [Questions](#Questions)
 
 # Installation
 Download all contents from https://github.com/josephcbaca/Employee-Summary-Generator repository.  In your command-line from the root folder run npm install to install all npm packages required and you're ready to go.
