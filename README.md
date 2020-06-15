@@ -1,5 +1,4 @@
-
-[![HitCount](http://hits.dwyl.io/Naereen/badges.svg)](http://hits.dwyl.io/Naereen/badges)
+[![HitCount](http://hits.dwyl.com/josephcbaca/Employee-Summary-Generator.svg)](http://hits.dwyl.com/josephcbaca/Employee-Summary-Generator)
 
 # CLI Employee Summary Generator
 
