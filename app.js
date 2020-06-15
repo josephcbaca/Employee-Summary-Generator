@@ -13,47 +13,122 @@ const render = require("./lib/htmlRenderer");
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
-inquirer
-    .prompt([
-        {
-            type: "input",
-            name: "employeename",
-            message: "What is your employees name?",
-        },
-        {
-            type: "input",
-            name: "employeeid",
-            message: "What is their employee id?",
-        },
-        {
-            type: "input",
-            name: "email",
-            message: "What is their email address?"
-        },
-        {
-            type: "choice",
-            message: "What is the employee's role?",
-            name: "role",
-            choices: [
-                "Manager",
-                "Engineer",
-                "Intern"
-              ]
+
+const mainQuestions = [
+    {
+        type: "input",
+        name: "name",
+        message: "What is this employee's name?",
+    },
+    {
+        type: "input",
+        name: "id",
+        message: "What is their employee id?",
+    },
+    {
+        type: "input",
+        name: "email",
+        message: "What is their email address?"
+    },
+    {
+        type: "list",
+        message: "What is the employee's role?",
+        name: "role",
+        choices: [
+            "Manager",
+            "Engineer",
+            "Intern"
+        ]
+    }
+]
+
+
+const managerQuestion = [
+    {
+        type: "input",
+        name: "officeNumber",
+        message: "What is this Manager's Office Number?"
+    },
+    {
+        type: "input",
+        name: "addone",
+        message: "Would you like to add another employee?(Y/N)"
+    },
+]
+
+
+const engineerQuestion = [
+    {
+        type: "input",
+        name: "github",
+        message: "What is this Engineer's GitHub name?"
+    },
+    {
+        type: "input",
+        name: "addone",
+        message: "Would you like to add another employee?(Y/N)"
+    },
+]
+
+
+const internQuestion = [
+    {
+        type: "input",
+        name: "school",
+        message: "What school is this Intern attending?"
+    },
+    {
+        type: "input",
+        name: "addone",
+        message: "Would you like to add another employee?(Y/N)"
+    },
+]
+
+async function init() {
+    try {
+
+        let isDone = false;
+        let employeeArray = [];
+
+
+        const data = await inquirer.prompt(mainQuestions);
+
+        switch (data.role) {
+            case "Manager":
+
+                const dataM = await inquirer.prompt(managerQuestion)
+
+                employeeArray.push(new Manager(data.name, data.id, data.email, data2.officeNumber));
+                console.log(employeeArray)
+                break;
+
+            case "Engineer":
+
+                const dataE = await inquirer.prompt(engineerQuestion)
+
+                employeeArray.push(new Engineer(data.name, data.id, data.email, dataE.officeNumber));
+
+                break;
+
+            case "Intern":
+
+                const dataI = await inquirer.prompt(internQuestion)
+
+                employeeArray.push(new Intern(data.name, data.id, data.email, dataI.officeNumber));
+
+                break;
         }
 
-    ])
-
-    function promptUser(incoming) {
-        return inquirer.prompt(incoming);
+    } catch (err) {
+        console.log(err)
     }
-
-    async function init() {
-try {
-    const data = await promptUser(questions);
 }
-    }
 
-    init();
+init();
+
+
+
+
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
