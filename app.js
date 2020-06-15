@@ -84,29 +84,46 @@ const internQuestion = [
     },
 ]
 
+let employeeArray = [];
+
 async function init() {
     try {
-
-        let isDone = false;
-        let employeeArray = [];
-
 
         const data = await inquirer.prompt(mainQuestions);
 
         switch (data.role) {
+
             case "Manager":
 
                 const dataM = await inquirer.prompt(managerQuestion)
 
-                employeeArray.push(new Manager(data.name, data.id, data.email, data2.officeNumber));
-                console.log(employeeArray)
+                employeeArray.push(new Manager(data.name, data.id, data.email, dataM.officeNumber));
+
+                switch (dataM.addone) {
+                    case "Y":
+                        init();
+                        break;
+                    case "N":
+                        renderHtml()
+                        break;
+                }
+
                 break;
 
             case "Engineer":
 
                 const dataE = await inquirer.prompt(engineerQuestion)
 
-                employeeArray.push(new Engineer(data.name, data.id, data.email, dataE.officeNumber));
+                employeeArray.push(new Engineer(data.name, data.id, data.email, dataE.github));
+
+                switch (dataE.addone) {
+                    case "Y":
+                        init();
+                        break;
+                    case "N":
+                        renderHtml()
+                        break;
+                }
 
                 break;
 
@@ -114,13 +131,27 @@ async function init() {
 
                 const dataI = await inquirer.prompt(internQuestion)
 
-                employeeArray.push(new Intern(data.name, data.id, data.email, dataI.officeNumber));
+                employeeArray.push(new Intern(data.name, data.id, data.email, dataI.school));
+
+                switch (dataI.addone) {
+                    case "Y":
+                        init();
+                        break;
+                    case "N":
+                        renderHtml()
+                        break;
+                }
 
                 break;
         }
 
     } catch (err) {
         console.log(err)
+    }
+    // write file to call function anytime N is marked
+    function renderHtml() {
+        fs.writeFileSync(outputPath, render(employeeArray), "utf-8")
+        console.log("Your team chart has been generated!")
     }
 }
 
